@@ -1,0 +1,15 @@
+{
+    "name": "lorello/cloudflare-utils",
+    "description": "Command line utility to interact with cloudflare CDN",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lorello",
+            "email": "lorenzo.salvadorini@softecspa.it"
+        }
+    ],
+    "require": {
+        "guzzle/guzzle": "~3.7",
+        "symfony/yaml": "2.*"
+    }
+}
