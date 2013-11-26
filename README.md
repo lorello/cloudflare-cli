@@ -26,7 +26,11 @@ Create a file in `~/.cloudflare.yaml`
     email : <your_cloudflare_email> 
     token : <your_api_token>
 
-## Use
+## Usage
+
+Only one command implemented at this time:
+
+    cloudflare.php purge-cache <domain>
 
 
 
