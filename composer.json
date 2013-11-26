@@ -10,6 +10,10 @@
     ],
     "require": {
         "guzzle/guzzle": "~3.7",
-        "symfony/yaml": "2.*"
+        "symfony/yaml": "2.*",
+        "symfony/console": "*"
+    },
+    "autoload": {
+      "psr-0": { "Lorello": "src/" }
     }
 }

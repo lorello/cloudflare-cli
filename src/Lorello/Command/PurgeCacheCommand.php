@@ -1,0 +1,34 @@
+<?php
+namespace Lorello\Command;
+
+use Guzzle\Http\Client;
+use Symfony\Component\Console as Console;
+
+class PurgeCacheCommand extends Console\Command\Command
+{
+
+  public function __construct($name = null){
+    parent::__construct($name);
+    $this->setDescription('Purge cache of a specific domain');
+    $this->setHelp('Purge cache of the speficied domain');
+    $this->addArgument('domain', Console\Input\InputArgument::REQUIRED, 'The domain to purge cache');
+  }
+
+  protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
+  {
+    $client = new Client('https://www.cloudflare.com');
+    $a = 'fpurge_ts';
+
+
+    $request = $client->post('api_json.html', null, array(
+        'tkn'       => $tkn,
+        'email'     => $email,
+        'a'         => $a,
+        'z'         => 'cnms.it',
+        'v'         => 1
+    ));
+    $data = $request->send()->json();
+    print_r($data);
+
+  }
+}
