@@ -1,4 +1,7 @@
 <?php
+# Container-aware commands learned here:
+# http://dcousineau.com/blog/2013/03/28/using-symfony-console-from-scratch/
+
 namespace Lorello\Command;
 
 use Symfony\Component\Console\Command\Command;
