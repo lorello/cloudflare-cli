@@ -10,7 +10,7 @@ Simple CLI for [CloudFlare](http://www.cloudflare.com)
 
 ## Setup
 
-You must provide the credentials to access CF API
+You must provide the credentials to access [CF API](http://www.cloudflare.com/docs/client-api.html)
 
 ### Through environment variables
 
@@ -31,6 +31,4 @@ Create a file in your home directory `~/.cloudflare.yaml`:
 Only one command implemented at this time:
 
     cloudflare.php purge-cache <domain>
-
-
 
