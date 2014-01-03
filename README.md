@@ -34,3 +34,7 @@ Only one command implemented at this time:
 
 
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lorello/cloudflare-cli/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
