@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+
+require 'src/app.php';
+
+$shell = new Console\Shell($app);
+$shell->run();

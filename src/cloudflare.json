@@ -1,0 +1,41 @@
+{
+    "name": "API",
+    "baseUrl": "https://www.cloudflare.com",
+    "operations": {
+        "GetUser": {
+            "httpMethod": "POST",
+            "uri": "/api_json.html",
+            "summary": "Purge domain",
+            "responseClass": "GetUserOutput",
+            "parameters": {
+                "fpurge_ts": {
+                    "location": "uri",
+                    "description": "ID of the user to be returned"
+                }
+            }
+        }
+    },
+    "models": {
+        "User" : {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "location": "json",
+                    "type": "integer",
+                    "sentAs": "user_id"
+                },
+                "username": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "email": {
+                    "location": "json",
+                    "type": "string"
+                }
+            }
+        },
+        "GetUserOutput": {
+            "$ref": "User"
+        }
+    }
+}
