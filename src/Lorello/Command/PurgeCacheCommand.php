@@ -1,8 +1,11 @@
 <?php
 namespace Lorello\Command;
 
-use Guzzle\Http\Client;
-use Symfony\Component\Console as Console;
+use Symfony\Component\Console;
+use Symfony\Component\Console\Output\OutputInterface;
+#use Guzzle\GuzzleServiceProvider;
+use Guzzle\Service\Client;
+use Guzzle\Service\Description\ServiceDescription;
 
 class PurgeCacheCommand extends ContainerAwareCommand 
 {
@@ -16,20 +19,41 @@ class PurgeCacheCommand extends ContainerAwareCommand
 
   protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
   {
-    $client = new Client('https://www.cloudflare.com');
-    $a = 'fpurge_ts';
 
     $domain = $input->getArgument('domain');
+    
+    /*
+    # Create a generic client and add a webservice description
+    $client = $this->app['guzzle.client'];
+    $description = ServiceDescription::factory('src/cloudflare.json');
+    $client->setDescription($description);
+    */
+    
+    $commandParams = array(
+      'u'   => $this->app['email'],
+      'tkn' => $this->app['token'],
+      'a'   =>'fpurge_ts', 
+      'z'   => $domain, 
+      'v'   =>1
+    );
 
-    $request = $client->post('api_json.html', null, array(
-        'tkn'       => $this->app['token'],
-        'email'     => $this->app['email'],
-        'a'         => $a,
-        'z'         => $domain,
-        'v'         => 1
-    ));
-    $data = $request->send()->json();
-    print_r($data);
+    # cf is configured in services.json
+    $client = $this->app['guzzle']->get('cf');
 
+    $data = $this->app['guzzle']->getData('cf');
+    echo $data['u'].' '.$data['tkn'];
+    # shorter way than:
+    #   $command = $client->getCommand('CachePurge', $commandParams);
+    #   $response = $command->execute();
+    $response = $this->app['guzzle']['cf']->CachePurge($commandParams);
+
+    if ($response['result'] == 'error') {
+      $output->writeln("\n<error>Error purging domain $domain:\n\t$response[msg]</error>\n");
+    } else {
+      $output->writeln("\n<info>Successfuly purged domain $domain</info>\n");
+    }
+    if (OutputInterface::VERBOSITY_DEBUG <= $output->getVerbosity()) {
+      $output->writeln(var_dump($response->toArray()));
+    }
   }
 }

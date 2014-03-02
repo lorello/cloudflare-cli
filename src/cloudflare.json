@@ -1,41 +1,95 @@
 {
-    "name": "API",
-    "baseUrl": "https://www.cloudflare.com",
-    "operations": {
-        "GetUser": {
-            "httpMethod": "POST",
-            "uri": "/api_json.html",
-            "summary": "Purge domain",
-            "responseClass": "GetUserOutput",
-            "parameters": {
-                "fpurge_ts": {
-                    "location": "uri",
-                    "description": "ID of the user to be returned"
-                }
-            }
-        }
-    },
-    "models": {
-        "User" : {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "location": "json",
-                    "type": "integer",
-                    "sentAs": "user_id"
-                },
-                "username": {
-                    "location": "json",
-                    "type": "string"
-                },
-                "email": {
-                    "location": "json",
-                    "type": "string"
-                }
-            }
+  "name": "API",
+  "baseUrl": "https://www.cloudflare.com",
+  "content-type": {
+    "location": "header",
+    "default": "application/x-www-form-urlencoded"
+  },
+  "operations": {
+    "GetDns": {
+      "httpMethod": "POST",
+      "uri": "/api_json.html",
+      "summary": "Get all DNS records for a domain",
+      "responseClass": "ApiOutput",
+      "parameters": {
+        "u": {
+          "location": "postField",
+          "description": "User email"
         },
-        "GetUserOutput": {
-            "$ref": "User"
+        "tkn": {
+          "location": "postField",
+          "description": "User secret token"
+        },
+        "a": {
+          "location": "postField",
+          "description": "Required action"
+        },
+        "z": {
+          "location": "postField",
+          "description": "Zone to work on"
         }
+      }
+    },
+    "CachePurge": {
+      "httpMethod": "POST",
+      "uri": "/api_json.html",
+      "summary": "Purge domain",
+      "responseClass": "CachePurgeOutput",
+      "parameters": {
+        "u": {
+          "location": "postField",
+          "description": "User email"
+        },
+        "tkn": {
+          "location": "postField",
+          "description": "User secret token"
+        },
+        "a": {
+          "location": "postField",
+          "description": "ID of the user to be returned"
+        },
+        "z": {
+          "location": "postField",
+          "description": "Zone to work on"
+        },
+        "v": {
+          "location": "postField",
+          "description": "Value"
+        }
+      }
     }
+  },
+  "models": {
+    "ApiOutput": {
+      "type": "object",
+      "additionalProperties": {
+        "location": "json"
+      }
+    },
+    "CachePurgeOutput": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "location": "statusCode",
+          "type": "integer"
+        },
+        "fpurge_ts": {
+          "location": "json",
+          "type": "integer"
+        },
+        "result": {
+          "location": "json",
+          "type": "string"
+        },
+        "msg": {
+          "location": "json",
+          "type": "string"
+        },
+        "err_code": {
+          "location": "json",
+          "type": "string"
+        }
+      }
+    }
+  }
 }

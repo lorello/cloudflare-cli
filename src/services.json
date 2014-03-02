@@ -1,12 +1,12 @@
 {
-    "includes": ["cloudflare.json"],
-    "services": {
-        "cf": {
-            "params": {
-                "username": "foo",
-                "password": "bar"
-            },
-            "alias": "cio"
-        }
+  "includes": [ "cloudflare.json" ],
+  "services": {
+    "cf": {
+      "class": "Lorello\\CloudflareClient",
+      "params": {
+        "u": "lorello@openweb.it",
+        "tkn": "fsdfsd"
+      }
     }
+  }
 }

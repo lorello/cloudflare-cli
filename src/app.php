@@ -34,20 +34,15 @@ $app['token']=$tkn;
 $console = new Console\Application('CloudFlare CLI', '0.1');
 
 $app->register(new GuzzleServiceProvider(), array(
-    'guzzle.services' => 'src/services.json',
+    'guzzle.services' => __DIR__ . '/services.json',
 ));
 
-
-$console->add(new Lorello\Command\PurgeCacheCommand($app, 'cache:purge'));
+$command = $app['guzzle']['cf'];
 
 /*
-$builder = $app['guzzle'];
-$cio = $builder->get('cio');
-*/
-
-$description = ServiceDescription::factory('src/cloudflare.json');
 $client = $app['guzzle.client'];
+$description = ServiceDescription::factory('src/cloudflare.json');
 $client->setDescription($description);
-$command = $client->getCommand('GetUser');
-$responseModel = $client->execute($command);
-var_dump($responseModel);
+*/
+$console->add(new Lorello\Command\PurgeCacheCommand($app, 'cache:purge'));
+$console->add(new Lorello\Command\GetDnsCommand($app, 'dns:get'));
