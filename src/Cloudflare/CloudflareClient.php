@@ -1,14 +1,13 @@
 <?php
 
-namespace Lorello;
-
+namespace Cloudflare;
 
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
 
 /**
- * A simple Twitter API client
+ * Cloudflare API Client
  */
 class CloudflareClient extends Client
 {
@@ -19,8 +18,8 @@ class CloudflareClient extends Client
 
         // The following values are required when creating the client
         $required = array(
-            'u',
-            'tkn',
+            //'user',
+            //'token',
         );
 
         // Merge in default settings and validate the config
@@ -28,6 +27,12 @@ class CloudflareClient extends Client
 
         // Create a new client
         $client = new self($config->get('base_url'), $config);
+
+        // $client = $app['guzzle.client'];
+        // $description = ServiceDescription::factory('src/cloudflare.json');
+        // $client->setDescription($description);
+        $description = ServiceDescription::factory('src/cloudflare.json');
+        $client->setDescription($description);
 
         return $client;
     }

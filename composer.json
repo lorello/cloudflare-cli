@@ -13,9 +13,12 @@
         "guzzle/silex-provider": "*",
         "symfony/yaml": "2.*",
         "symfony/console": "*",
-        "silex/silex": "*"
+        "silex/silex": "*",
+        "knplabs/console-service-provider": "dev-master"
     },
     "autoload": {
-      "psr-0": { "Lorello": "src/" }
+        "psr-0": {
+            "Cloudflare": "src/"
+        }
     }
 }

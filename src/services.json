@@ -1,12 +1,7 @@
 {
-  "includes": [ "cloudflare.json" ],
-  "services": {
-    "cf": {
-      "class": "Lorello\\CloudflareClient",
-      "params": {
-        "u": "lorello@openweb.it",
-        "tkn": "fsdfsd"
-      }
+    "services": {
+        "cf": {
+            "class": "Cloudflare\\CloudflareClient"
+        }
     }
-  }
 }
