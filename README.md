@@ -28,9 +28,10 @@ Create a file in your home directory `~/.cloudflare.yaml`:
 
 ## Usage
 
-Only one command implemented at this time:
+Only a few commands are implemented at this time:
 
-    cloudflare.php purge-cache <domain>
+    ./console cache:purge <domain>
+    ./console dns:list <domain>
 
 
 
