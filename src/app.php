@@ -67,6 +67,9 @@ $console->add(new Cloudflare\Command\DnsGetCommand($app, 'dns:list'));
 // $console->add(new Cloudflare\Command\ZoneGetCommand($app, 'zone:get'));
 // security-level, cache-level, ipv6, devmode, rocket-loader, minify, mirage
 // $console->add(new Cloudflare\Command\ZoneSetCommand($app, 'zone:set'));
+
+$console->add(new Cloudflare\Command\ZoneSetDevModeCommand($app, 'dev:on'));
+$console->add(new Cloudflare\Command\ZoneSetDevModeCommand($app, 'dev:off'));
 //
 // $console->add(new Cloudflare\Command\StatsGetCommand($app, 'stats:get'));
 
