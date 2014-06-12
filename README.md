@@ -28,10 +28,30 @@ Create a file in your home directory `~/.cloudflare.yaml`:
 
 ## Usage
 
-Only a few commands are implemented at this time:
+Only a few commands are implemented at this time, this is the help command:
+```
+Usage:
+  [options] command [arguments]
 
-    ./console cache:purge <domain>
-    ./console dns:list <domain>
+Options:
+  --help           -h Display this help message.
+  --quiet          -q Do not output any message.
+  --verbose        -v|vv|vvv Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  --version        -V Display this application version.
+  --ansi              Force ANSI output.
+  --no-ansi           Disable ANSI output.
+  --no-interaction -n Do not ask any interactive question.
 
-
-
+Available commands:
+  help          Displays help for a command
+  list          Lists commands
+cache
+  cache:purge   Purge cache of a specific domain
+dev
+  dev:off       Toggle dev mode On or Off
+  dev:on        Toggle dev mode On or Off
+dns
+  dns:list      Get all Dns records for a specific domain
+zone
+  zone:get      Get current settings of the specified zone
+```

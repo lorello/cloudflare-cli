@@ -43,7 +43,7 @@ $app->register(
     new ConsoleServiceProvider(),
     array(
         'console.name'              => 'CloudFlare CLI',
-        'console.version'           => '0.2',
+        'console.version'           => '0.3',
         'console.project_directory' => __DIR__ . '/..'
     )
 );
@@ -64,7 +64,7 @@ $console->add(new Cloudflare\Command\DnsGetCommand($app, 'dns:list'));
 // $console->add(new Cloudflare\Command\VisitorUnbanCommand($app, 'visitor:unban'));
 //
 // $console->add(new Cloudflare\Command\ZoneListCommand($app, 'zone:list'));
-// $console->add(new Cloudflare\Command\ZoneGetCommand($app, 'zone:get'));
+$console->add(new Cloudflare\Command\ZoneGetCommand($app, 'zone:get'));
 // security-level, cache-level, ipv6, devmode, rocket-loader, minify, mirage
 // $console->add(new Cloudflare\Command\ZoneSetCommand($app, 'zone:set'));
 

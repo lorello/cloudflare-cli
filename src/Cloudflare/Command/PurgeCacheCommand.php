@@ -52,9 +52,9 @@ class PurgeCacheCommand extends ContainerAwareCommand
         $response = $this->app['guzzle']['cf']->CachePurge($commandParams);
 
         if ($response['result'] == 'error') {
-            $output->writeln("\n<error>Error purging domain $urlTextMsg $domain:\n\t$response[msg]</error>\n");
+            $output->writeln("\n<error>Error purging $urlTextMsg on $domain:\n\t$response[msg]</error>\n");
         } else {
-            $output->writeln("\n<info>Successfuly purged $urlTextMsg domain $domain</info>\n");
+            $output->writeln("\n<info>Successfuly purged $urlTextMsg on domain $domain</info>\n");
         }
         if (OutputInterface::VERBOSITY_DEBUG <= $output->getVerbosity()) {
             $output->writeln(var_dump($response->toArray()));
