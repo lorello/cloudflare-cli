@@ -16,16 +16,25 @@ use Knp\Provider\ConsoleServiceProvider;
 $email = getenv('CF_USER');
 $tkn   = getenv('CF_TOKEN');
 
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+  // Windows OS detected
+  $config_path = getenv('HOMEPATH');
+} else {
+  $config_path = getenv('HOME');
+}
+
 if (empty($email) or empty($tkn)) {
-    $config_file = getenv('HOME') . '/.cloudflare.yaml';
-    if (file_exists($config_file)) {
-        $parsed = Yaml::parse($config_file);
-        $email  = $parsed['email'];
-        $tkn    = $parsed['token'];
-    } else {
-        echo("Missing configuration");
-        exit(1);
-    }
+  $config_file = $config_path . DIRECTORY_SEPARATOR . '.cloudflare.yaml';
+  if (file_exists($config_file)) {
+    $parsed = Yaml::parse($config_file);
+    $email  = $parsed['email'];
+    $tkn    = $parsed['token'];
+  }
+}
+
+if (empty($email) or empty($tkn)) {
+  echo("\nMissing configuration\n");
+  exit(1);
 }
 
 $app             = new Silex\Application();
