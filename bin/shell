@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require 'src/app.php';
+require __DIR__.'/../src/app.php';
 
 $shell = new Console\Shell($app);
 $shell->run();

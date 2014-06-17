@@ -3,7 +3,7 @@
 date_default_timezone_set('UTC');
 set_time_limit(0);
 
-require 'vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use Silex\Application;
 use Symfony\Component\Yaml\Yaml;
@@ -48,11 +48,12 @@ $app->register(
     )
 );
 
+// package_version si managed by phar builder
 $app->register(
     new ConsoleServiceProvider(),
     array(
         'console.name'              => 'CloudFlare CLI',
-        'console.version'           => '0.3',
+        'console.version'           => '@package_version@',
         'console.project_directory' => __DIR__ . '/..'
     )
 );
