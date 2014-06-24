@@ -2,7 +2,7 @@
   {
     "name": "cloudflare",
     "sha1": "628f09a5dec3ab0e9175e61ef99b32dd49b72532",
-    "url": "s3://static.devops.it/cloudflare-cli/cloudflare-cli-0.4.phar",
+    "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.4.phar",
     "version": "0.4"
   }
 ]
