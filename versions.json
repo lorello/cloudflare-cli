@@ -4,5 +4,11 @@
     "sha1": "628f09a5dec3ab0e9175e61ef99b32dd49b72532",
     "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.4.phar",
     "version": "0.4"
+  },
+  {
+    "name": "cloudflare.phar",
+    "sha1": "08008a34e7bb63b4353e5972bf332260e2517504",
+    "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.5.phar",
+    "version": "0.5"
   }
 ]
