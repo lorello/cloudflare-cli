@@ -13,6 +13,9 @@ use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
 use Knp\Provider\ConsoleServiceProvider;
 
+use KevinGH\Amend\Command;
+use KevinGH\Amend\Helper;
+
 $email = getenv('CF_USER');
 $tkn   = getenv('CF_TOKEN');
 
@@ -83,4 +86,9 @@ $console->add(new Cloudflare\Command\ZoneSetDevModeCommand($app, 'dev:off'));
 //
 // $console->add(new Cloudflare\Command\StatsGetCommand($app, 'stats:get'));
 
+
+$updateCommand = new Command('update');
+$updateCommand->setManifestUri('https://raw.githubusercontent.com/lorello/cloudflare-cli/master/versions.json');
+$console->getHelperSet()->set(new Helper());
+$console->add($updateCommand);
 

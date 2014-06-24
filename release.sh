@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Script to bundle a new phar and public it on S3
+#
 
 VERSION=$1
 

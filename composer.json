@@ -14,7 +14,8 @@
         "symfony/yaml": "2.*",
         "symfony/console": "*",
         "silex/silex": "*",
-        "knplabs/console-service-provider": "dev-master"
+        "knplabs/console-service-provider": "dev-master",
+        "kherge/amend": "3.*"
     },
     "autoload": {
         "psr-0": {
