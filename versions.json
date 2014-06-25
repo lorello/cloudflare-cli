@@ -6,9 +6,15 @@
     "version": "0.4"
   },
   {
-    "name": "cloudflare.phar",
+    "name": "cloudflare",
     "sha1": "08008a34e7bb63b4353e5972bf332260e2517504",
     "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.5.phar",
     "version": "0.5"
+  },
+  {
+    "name": "cloudflare",
+    "sha1": "2bed45398716363d9e9b89118a33ef712315093e",
+    "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.6.phar",
+    "version": "0.6",
   }
 ]
