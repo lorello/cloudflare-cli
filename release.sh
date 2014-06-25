@@ -26,7 +26,7 @@ echo -e "\n  {"
 echo -e "    \"name\": \"${LOCAL_NAME}\","
 echo -e "    \"sha1\": \"${SHA1}\","
 echo -e "    \"url\": \"http://$BUCKET/$DOWNLOADABLE_NAME\","
-echo -e "    \"version\": \"${VERSION}\","
+echo -e "    \"version\": \"${VERSION}\""
 echo -e "  }\n"
 
 echo "Manually update versions.json, then continue"
