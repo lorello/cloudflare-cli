@@ -4,30 +4,34 @@
 #
 
 VERSION=$1
-
 [ -z $VERSION ] && echo "Missing version parameter" && exit 1
 
-[ -f cloudflare.phar ] && rm cloudflare.phar
-box build
-[ ! -f cloudflare.phar ] && echo "\nMissing cloudflare.phar, build failed?\n" && exit 1
+ARTIFACT="cloudflare-cli-${VERSION}.phar"
+DOWNLOAD_NAME="cloudflare"
+BUCKET="static.devops.it/cloudflare-cli"
 
-# Public file
-s3cmd put cloudflare.phar s3://static.devops.it/cloudflare-cli/cloudflare-cli-{$VERSION}.phar
+[ -f $ARTIFACT ] && rm $ARTIFACT
+git tag $VERSION
+
+box build
+[ ! -f $ARTIFACT ] && echo "\nMissing $ARTIFACT, build failed?\n" && exit 1
+
+# Public file and clean current directory
+s3cmd put $ARTIFACT s3://$BUCKET/$ARTIFACT
+rm $ARTIFACT
 
 # Create fragment for versions.json
-SHA1=$(php -r "echo sha1_file('cloudflare.phar');")
+SHA1=$(php -r "echo sha1_file('$ARTIFACT');")
 echo -e "\n  {"
-echo -e "    \"name\": \"cloudflare.phar\","
+echo -e "    \"name\": \"${DOWNLOAD_NAME}\","
 echo -e "    \"sha1\": \"${SHA1}\","
-echo -e "    \"url\": \"http://static.devops.it/cloudflare-cli/cloudflare-cli-${VERSION}.phar\","
+echo -e "    \"url\": \"http://$BUCKET/$ARTIFACT\","
 echo -e "    \"version\": ${VERSION},"
 echo -e "  }\n"
-
-git tag $VERSION
 
 echo "Manually update versions.json, then continue"
 read WAIT
 
-git commit -a -m "released version ${VERSION}"
+git commit -m "released version ${VERSION}" versions.json
 git push
 
