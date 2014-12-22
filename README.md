@@ -23,13 +23,15 @@ Just drop two variables in your `~/.bashrc`:
 
 Create a file in your home directory `~/.cloudflare.yaml`:
 
-    email : <your_cloudflare_email> 
+    email : <your_cloudflare_email>
     token : <your_api_token>
 
 ## Usage
 
 Only a few commands are implemented at this time, this is the help command:
 ```
+CloudFlare CLI version @package_version@
+
 Usage:
   [options] command [arguments]
 
@@ -43,15 +45,18 @@ Options:
   --no-interaction -n Do not ask any interactive question.
 
 Available commands:
-  help          Displays help for a command
-  list          Lists commands
+  help           Displays help for a command
+  list           Lists commands
+  update         Updates the application.
 cache
-  cache:purge   Purge cache of a specific domain
+  cache:purge    Purge cache of a specific domain
 dev
-  dev:off       Toggle dev mode On or Off
-  dev:on        Toggle dev mode On or Off
+  dev:off        Toggle dev mode On or Off
+  dev:on         Toggle dev mode On or Off
 dns
-  dns:list      Get all Dns records for a specific domain
+  dns:list       Get all Dns records for a specific domain
 zone
-  zone:get      Get current settings of the specified zone
+  zone:details   Get details about the specified zone
+  zone:get       Get current settings of the specified zone
+  zone:list      Lists all domains in a CloudFlare account along with other data.
 ```
