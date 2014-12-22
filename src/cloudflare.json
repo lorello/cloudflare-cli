@@ -6,6 +6,26 @@
     "default": "application/x-www-form-urlencoded"
   },
   "operations": {
+    "ApiPost": {
+      "httpMethod": "POST",
+      "uri": "/api_json.html",
+      "summary": "Do a Post",
+      "responseClass": "ApiOutput",
+      "parameters": {
+        "email": {
+          "location": "postField",
+          "description": "User email"
+        },
+        "tkn": {
+          "location": "postField",
+          "description": "User secret token"
+        },
+        "a": {
+          "location": "postField",
+          "description": "Required action"
+        }
+      }
+    },
     "GetDns": {
       "httpMethod": "POST",
       "uri": "/api_json.html",

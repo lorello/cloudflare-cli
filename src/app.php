@@ -76,7 +76,8 @@ $console->add(new Cloudflare\Command\DnsGetCommand($app, 'dns:list'));
 // $console->add(new Cloudflare\Command\VisitorBanCommand($app, 'visitor:ban'));
 // $console->add(new Cloudflare\Command\VisitorUnbanCommand($app, 'visitor:unban'));
 //
-// $console->add(new Cloudflare\Command\ZoneListCommand($app, 'zone:list'));
+$console->add(new Cloudflare\Command\ZoneListCommand($app, 'zone:list'));
+$console->add(new Cloudflare\Command\ZoneDetailsCommand($app, 'zone:details'));
 $console->add(new Cloudflare\Command\ZoneGetCommand($app, 'zone:get'));
 // security-level, cache-level, ipv6, devmode, rocket-loader, minify, mirage
 // $console->add(new Cloudflare\Command\ZoneSetCommand($app, 'zone:set'));
@@ -91,4 +92,3 @@ $updateCommand = new Command('update');
 $updateCommand->setManifestUri('https://raw.githubusercontent.com/lorello/cloudflare-cli/master/versions.json');
 $console->getHelperSet()->set(new Helper());
 $console->add($updateCommand);
-
