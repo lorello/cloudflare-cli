@@ -1,26 +1,32 @@
 [
   {
-    "name": "cloudflare",
+    "name": "cloudflare.phar",
     "sha1": "628f09a5dec3ab0e9175e61ef99b32dd49b72532",
     "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.4.phar",
     "version": "0.4"
   },
   {
-    "name": "cloudflare",
+    "name": "cloudflare.phar",
     "sha1": "08008a34e7bb63b4353e5972bf332260e2517504",
     "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.5.phar",
     "version": "0.5"
   },
   {
-    "name": "cloudflare",
+    "name": "cloudflare.phar",
     "sha1": "2bed45398716363d9e9b89118a33ef712315093e",
     "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.6.phar",
     "version": "0.6"
   },
   {
-    "name": "cloudflare",
+    "name": "cloudflare.phar",
     "sha1": "66e8c1dc31020bde25f94527168c84c808068801",
     "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.7.phar",
     "version": "0.7"
+  },
+  {
+    "name": "cloudflare.phar",
+    "sha1": "2dd808c43e325d3f4c86e7ed0fe5e42ef3062ee9",
+    "url": "http://static.devops.it/cloudflare-cli/cloudflare-cli-0.8.phar",
+    "version": "0.8"
   }
 ]
