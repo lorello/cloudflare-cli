@@ -4,7 +4,7 @@
 #
 
 VERSION=$1
-[ -z $VERSION ] && echo "Missing version parameter" && exit 1
+[ -z $VERSION ] && echo "Missing version parameter" && git tag && exit 1
 
 ARTIFACT="cloudflare.phar"
 DOWNLOADABLE_NAME="cloudflare-cli-${VERSION}.phar"
@@ -23,7 +23,7 @@ s3cmd put $ARTIFACT s3://$BUCKET/$DOWNLOADABLE_NAME
 # Create fragment for versions.json
 SHA1=$(php -r "echo sha1_file('$ARTIFACT');")
 echo -e "\n  {"
-echo -e "    \"name\": \"${LOCAL_NAME}\","
+echo -e "    \"name\": \"${ARTIFACT}\","
 echo -e "    \"sha1\": \"${SHA1}\","
 echo -e "    \"url\": \"http://$BUCKET/$DOWNLOADABLE_NAME\","
 echo -e "    \"version\": \"${VERSION}\""
