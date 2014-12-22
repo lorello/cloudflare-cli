@@ -3,7 +3,8 @@
   "directories": [ "src" ],
   "files": [ 
     "LICENSE",
-    "src/app.php"
+    "src/app.php",
+    "versions.json"
   ],
   "finder": [
     {
