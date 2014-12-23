@@ -31,7 +31,7 @@ class OpenIssueCommand extends ContainerAwareCommand
 
         # explicitly require API version 3
         $request->addHeader('Accept', 'application/vnd.github.v3+json');
-        $postBody = $request->getBody();
+        $postBody = $request->getBody() or die('karakiri');
         $postBody->setField('title', $title);
         $postBody->setField('body', $body);
         $response = $this->app['guzzle.client']->send($request);

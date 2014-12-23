@@ -94,4 +94,4 @@ $console->getHelperSet()->set(new Helper());
 $console->add($updateCommand);
 
 
-$console->add(new Cloudflare\Command\OpenIssueCommand($app, 'issue:open'));
+#$console->add(new Cloudflare\Command\OpenIssueCommand($app, 'issue:open'));
