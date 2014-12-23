@@ -3,6 +3,8 @@ cloudflare-cli
 
 Simple CLI for [CloudFlare](http://www.cloudflare.com)
 
+[![build status](https://ci.sftc.it/projects/25/status.png?ref=master)](https://ci.sftc.it/projects/25?ref=master)
+
 ## Requirements
 
  * PHP >= 5.3
