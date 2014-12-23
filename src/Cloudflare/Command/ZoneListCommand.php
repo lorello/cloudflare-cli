@@ -14,14 +14,50 @@ class ZoneListCommand extends ContainerAwareCommand
         parent::__construct($app, $name);
         $this->setDescription('Lists all domains in a CloudFlare account along with other data.');
         $this->setHelp('This lists all domains in a CloudFlare account along with other data.');
-        #$this->addArgument('domain', Console\Input\InputArgument::REQUIRED, 'The domain');
+
+        $this->labels['setting'][''] = '';
+
+        $bool_values = array(0 => 'Off', 1=>'On');
+
+        $this->labels['zone-status']['V'] = 'Verified';
+        $this->labels['zone-status']['P'] = 'Waiting DNS change';
+        $this->labels['zone-status']['INI'] = 'Waiting Setup';
+
+        $this->labels['pro'] = $bool_values;
+        $this->labels['status-class'] = function ($value) { return preg_replace('/status-/', '', $value); };
+
+    }
+
+    protected function labelize($key, $value) {
+
+        if (isset($this->labels[$key])) {
+            if (is_callable($this->labels[$key])) {
+                return $this->labels[$key]($value);
+            } elseif (isset($this->labels[$key][$value])) {
+                if (is_string($this->labels[$key][$value])) {
+                    return $this->labels[$key][$value];
+                }
+            }
+        }
+
+        if(is_array($value)) {
+            $results = array();
+            foreach($value as $subk=>$subv) {
+                if (is_integer($subk))
+                    $results[] = '- '. $this->labelize($subk, $subv);
+                else
+                    $results[] = '* '. $this->labelize('setting', $subk) .
+                    ': '. $this->labelize($subk, $subv);
+            }
+            return implode("\n", $results);
+        }
+
+        if (is_string($value))
+            return $value;
     }
 
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-
-        #$domain = $input->getArgument('domain');
-
         $data = $this->app['guzzle']->getData('cf');
 
         $commandParams = array(
@@ -41,16 +77,15 @@ class ZoneListCommand extends ContainerAwareCommand
             for ($i = 0; $i < $response['response']['zones']['count']; $i++) {
                 $table_rows[$i] = array(
                     $response['response']['zones']['objs'][$i]['zone_name'],
-                    $response['response']['zones']['objs'][$i]['zone_type'],
-                    $response['response']['zones']['objs'][$i]['zone_status'],
-                    $response['response']['zones']['objs'][$i]['zone_status_class'],
-                    $response['response']['zones']['objs'][$i]['props']['pro'],
+                    $this->labelize('zone-status', $response['response']['zones']['objs'][$i]['zone_status']),
+                    $this->labelize('status-class', $response['response']['zones']['objs'][$i]['zone_status_class']),
+                    $this->labelize('pro', $response['response']['zones']['objs'][$i]['props']['pro'])
                 );
             }
 
             $table = $this->getApplication()->getHelperSet()->get('table');
             $table
-                ->setHeaders(array('name', 'type', 'status', 'status-class', 'pro'))
+                ->setHeaders(array('name', 'status', 'status-class', 'pro'))
                 ->setRows($table_rows);
             $table->render($output);
 
