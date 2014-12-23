@@ -92,3 +92,6 @@ $updateCommand = new Command('update');
 $updateCommand->setManifestUri('https://raw.githubusercontent.com/lorello/cloudflare-cli/master/versions.json');
 $console->getHelperSet()->set(new Helper());
 $console->add($updateCommand);
+
+
+$console->add(new Cloudflare\Command\OpenIssueCommand($app, 'issue:open'));
