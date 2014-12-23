@@ -66,7 +66,7 @@ $console->add(new Cloudflare\Command\PurgeCacheCommand($app, 'cache:purge'));
 $console->add(new Cloudflare\Command\DnsGetCommand($app, 'dns:list'));
 
 // TODO
-// $console->add(new Cloudflare\Command\DnsAddCommand($app, 'dns:add'));
+$console->add(new Cloudflare\Command\DnsAddCommand($app, 'dns:add'));
 // $console->add(new Cloudflare\Command\DnsUpdateCommand($app, 'dns:update'));
 // $console->add(new Cloudflare\Command\DnsDeleteCommand($app, 'dns:delete'));
 //

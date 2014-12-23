@@ -26,7 +26,47 @@
         }
       }
     },
-    "GetDns": {
+    "ChangeDns": {
+      "httpMethod": "POST",
+      "uri": "/api_json.html",
+      "summary": "Get all DNS records for a domain",
+      "responseClass": "ApiOutput",
+      "parameters": {
+        "u": {
+          "location": "postField",
+          "description": "User email"
+        },
+        "tkn": {
+          "location": "postField",
+          "description": "User secret token"
+        },
+        "a": {
+          "location": "postField",
+          "description": "Required action"
+        },
+        "z": {
+          "location": "postField",
+          "description": "Zone to work on"
+        },
+        "type": {
+          "location": "postField",
+          "description": "Zone to work on"
+        },
+        "name": {
+          "location": "postField",
+          "description": "Zone to work on"
+        },
+        "content": {
+          "location": "postField",
+          "description": "Zone to work on"
+        },
+        "ttl": {
+          "location": "postField",
+          "description": "Zone to work on"
+        }
+      }
+    },
+    "ApiDns": {
       "httpMethod": "POST",
       "uri": "/api_json.html",
       "summary": "Get all DNS records for a domain",
