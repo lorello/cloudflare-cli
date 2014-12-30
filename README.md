@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/lorello/cloudflare-cli.png?label=ready&title=Ready)](https://waffle.io/lorello/cloudflare-cli)
 cloudflare-cli
 ==============
 
