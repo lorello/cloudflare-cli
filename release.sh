@@ -4,7 +4,7 @@
 #
 
 VERSION=$1
-[ -z $VERSION ] && echo "Missing version parameter" && git tag && exit 1
+[ -z $VERSION ] && echo -e "Missing version parameter\n" && git tag && exit 1
 
 ARTIFACT="cloudflare.phar"
 DOWNLOADABLE_NAME="cloudflare-cli-${VERSION}.phar"
@@ -14,8 +14,15 @@ BUCKET="static.devops.it/cloudflare-cli"
 [ -f $ARTIFACT ] && rm $ARTIFACT
 git tag $VERSION
 
+BOX=$(which box)
+if [ -z $BOX ]; then
+    echo "The PHAR building utility 'box' is missing, install it with:"
+    echo "curl -LSs http://box-project.github.io/box2/installer.php | php"
+    echo -e "\n"
+    exit 2
+fi
 box build
-[ ! -f $ARTIFACT ] && echo "\nMissing $ARTIFACT, build failed?\n" && exit 1
+[ ! -f $ARTIFACT ] && echo -e "\nMissing $ARTIFACT, build failed?\n" && exit 1
 
 # Public file and clean current directory
 s3cmd put $ARTIFACT s3://$BUCKET/$DOWNLOADABLE_NAME
