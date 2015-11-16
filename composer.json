@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "guzzle/guzzle": "~3.7",
+        "guzzle/guzzle": "dev-master#49104c61 as 3.9@dev",
         "guzzle/silex-provider": "*",
         "symfony/yaml": "2.*",
         "symfony/console": "*",
