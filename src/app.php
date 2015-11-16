@@ -36,7 +36,12 @@ if (empty($email) or empty($tkn)) {
 }
 
 if (empty($email) or empty($tkn)) {
-  echo("\nMissing configuration\n");
+  echo("\nMissing configuration file: $config_file\n");
+  echo("\nConfig file format:\n".
+      "\n---8<-------------8<------------\n".
+      "email: address@domain.tld\ntoken: TOKEN\n".
+      "\n---8<-------------8<------------\n"
+  );
   exit(1);
 }
 
