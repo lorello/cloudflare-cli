@@ -1,14 +1,12 @@
 <?php
+
 namespace Cloudflare\Command;
 
 use Symfony\Component\Console;
 use Symfony\Component\Console\Output\OutputInterface;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
 
 class DnsAddCommand extends ContainerAwareCommand
 {
-
     public function __construct($app, $name = null)
     {
         parent::__construct($app, $name);
@@ -30,16 +28,15 @@ class DnsAddCommand extends ContainerAwareCommand
 
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-
         $domain = $input->getArgument('domain');
         $type = strtoupper($input->getArgument('type'));
         $name = $input->getArgument('name');
         $content = $input->getArgument('content');
-        $ttl = ( $input->getOption('ttl') == 'auto' ? 1 : $input->getOption('ttl'));
+        $ttl = ($input->getOption('ttl') == 'auto' ? 1 : $input->getOption('ttl'));
 
         $data = $this->app['guzzle']->getData('cf');
 
-        $commandParams = array(
+        $commandParams = [
             'u'       => $this->app['cf.user'],
             'tkn'     => $this->app['cf.token'],
             'a'       => 'rec_new',
@@ -47,8 +44,8 @@ class DnsAddCommand extends ContainerAwareCommand
             'type'    => $type,
             'name'    => $name,
             'content' => $content,
-            'ttl'     => $ttl
-        );
+            'ttl'     => $ttl,
+        ];
 
         $response = $this->app['guzzle']['cf']->ChangeDns($commandParams);
 
@@ -58,7 +55,7 @@ class DnsAddCommand extends ContainerAwareCommand
             $output->writeln("\n<info>Record $type $name.$domain -> $content successfully created</info>:\n");
         }
         if (OutputInterface::VERBOSITY_DEBUG <= $output->getVerbosity()) {
-            $output->writeln(var_dump($response->toArray()) . '\n\n' . var_dump($response['response']['recs']));
+            $output->writeln(var_dump($response->toArray()).'\n\n'.var_dump($response['response']['recs']));
         }
     }
 }

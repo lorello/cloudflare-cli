@@ -1,14 +1,13 @@
 <?php
+
 namespace Cloudflare\Command;
 
+use Guzzle\Service\Client;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Output\OutputInterface;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
 
 class OpenIssueCommand extends ContainerAwareCommand
 {
-
     public function __construct($app, $name = null)
     {
         parent::__construct($app, $name);
@@ -26,10 +25,10 @@ class OpenIssueCommand extends ContainerAwareCommand
         $apiPath = '/repos/lorello/cloudflare-cli/issues';
         $apiUrl = 'https://api.github.com'.$apiPath;
 
-        # https://developer.github.com/v3/issues/#create-an-issue
+        // https://developer.github.com/v3/issues/#create-an-issue
         $request = $this->app['guzzle.client']->createRequest('POST', $apiUrl);
 
-        # explicitly require API version 3
+        // explicitly require API version 3
         $request->addHeader('Accept', 'application/vnd.github.v3+json');
         $postBody = $request->getBody() or die('karakiri');
         $postBody->setField('title', $title);
@@ -40,10 +39,9 @@ class OpenIssueCommand extends ContainerAwareCommand
             $output->writeln("\n<error>Error adding record $type\n\t$name.$domain -> $content\n\n\t$response[msg]</error>\n");
         } else {
             $output->writeln("\n<info>Record $type $name.$domain -> $content successfully created</info>:\n");
-
         }
         if (OutputInterface::VERBOSITY_DEBUG <= $output->getVerbosity()) {
-            $output->writeln(var_dump($response->toArray()) . "\n\n" . var_dump($response['response']['recs']));
+            $output->writeln(var_dump($response->toArray())."\n\n".var_dump($response['response']['recs']));
         }
     }
 }

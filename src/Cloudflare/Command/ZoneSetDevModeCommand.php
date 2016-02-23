@@ -1,14 +1,12 @@
 <?php
+
 namespace Cloudflare\Command;
 
 use Symfony\Component\Console;
 use Symfony\Component\Console\Output\OutputInterface;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
 
 class ZoneSetDevModeCommand extends ContainerAwareCommand
 {
-
     public function __construct($app, $name = null)
     {
         parent::__construct($app, $name);
@@ -30,13 +28,13 @@ class ZoneSetDevModeCommand extends ContainerAwareCommand
             $modeText = 'Off';
         }
 
-        $commandParams = array(
+        $commandParams = [
             'u'   => $this->app['cf.user'],
             'tkn' => $this->app['cf.token'],
             'a'   => 'devmode',
             'z'   => $domain,
-            'v'   => $mode
-        );
+            'v'   => $mode,
+        ];
 
         $response = $this->app['guzzle']['cf']->CachePurge($commandParams);
 
