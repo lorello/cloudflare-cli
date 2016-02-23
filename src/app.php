@@ -5,65 +5,60 @@ set_time_limit(0);
 
 require __DIR__.'/../vendor/autoload.php';
 
-use Silex\Application;
-use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Console as Console;
 use Guzzle\GuzzleServiceProvider;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
-use Knp\Provider\ConsoleServiceProvider;
-
 use KevinGH\Amend\Command;
 use KevinGH\Amend\Helper;
+use Knp\Provider\ConsoleServiceProvider;
+use Symfony\Component\Console as Console;
+use Symfony\Component\Yaml\Yaml;
 
 $email = getenv('CF_USER');
-$tkn   = getenv('CF_TOKEN');
+$tkn = getenv('CF_TOKEN');
 
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-  // Windows OS detected
+    // Windows OS detected
   $config_path = getenv('HOMEPATH');
 } else {
-  $config_path = getenv('HOME');
+    $config_path = getenv('HOME');
 }
 
 if (empty($email) or empty($tkn)) {
-  $config_file = $config_path . DIRECTORY_SEPARATOR . '.cloudflare.yaml';
-  if (file_exists($config_file)) {
-    $parsed = Yaml::parse($config_file);
-    $email  = $parsed['email'];
-    $tkn    = $parsed['token'];
-  }
+    $config_file = $config_path.DIRECTORY_SEPARATOR.'.cloudflare.yaml';
+    if (file_exists($config_file)) {
+        $parsed = Yaml::parse($config_file);
+        $email = $parsed['email'];
+        $tkn = $parsed['token'];
+    }
 }
 
 if (empty($email) or empty($tkn)) {
-  echo("\nMissing configuration file: $config_file\n");
-  echo("\nConfig file format:\n".
+    echo "\nMissing configuration file: $config_file\n";
+    echo "\nConfig file format:\n".
       "\n---8<-------------8<------------\n".
       "email: address@domain.tld\ntoken: TOKEN\n".
-      "\n---8<-------------8<------------\n"
-  );
-  exit(1);
+      "\n---8<-------------8<------------\n";
+    exit(1);
 }
 
-$app             = new Silex\Application();
-$app['cf.user']  = $email;
+$app = new Silex\Application();
+$app['cf.user'] = $email;
 $app['cf.token'] = $tkn;
 
 $app->register(
     new GuzzleServiceProvider(),
-    array(
-        'guzzle.services' => __DIR__ . '/services.json',
-    )
+    [
+        'guzzle.services' => __DIR__.'/services.json',
+    ]
 );
 
 // package_version si managed by phar builder
 $app->register(
     new ConsoleServiceProvider(),
-    array(
+    [
         'console.name'              => 'CloudFlare CLI',
         'console.version'           => '@package_version@',
-        'console.project_directory' => __DIR__ . '/..'
-    )
+        'console.project_directory' => __DIR__.'/..',
+    ]
 );
 
 $console = $app['console'];
@@ -92,11 +87,9 @@ $console->add(new Cloudflare\Command\ZoneSetDevModeCommand($app, 'dev:off'));
 //
 // $console->add(new Cloudflare\Command\StatsGetCommand($app, 'stats:get'));
 
-
 $updateCommand = new Command('update');
 $updateCommand->setManifestUri('https://raw.githubusercontent.com/lorello/cloudflare-cli/master/versions.json');
 $console->getHelperSet()->set(new Helper());
 $console->add($updateCommand);
 
-
-#$console->add(new Cloudflare\Command\OpenIssueCommand($app, 'issue:open'));
+//$console->add(new Cloudflare\Command\OpenIssueCommand($app, 'issue:open'));
