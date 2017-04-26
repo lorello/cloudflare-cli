@@ -1,14 +1,12 @@
 <?php
+
 namespace Cloudflare\Command;
 
 use Symfony\Component\Console;
 use Symfony\Component\Console\Output\OutputInterface;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
 
 class PurgeCacheCommand extends ContainerAwareCommand
 {
-
     public function __construct($app, $name = null)
     {
         parent::__construct($app, $name);
@@ -26,27 +24,24 @@ class PurgeCacheCommand extends ContainerAwareCommand
 
         $url = $input->getArgument('url');
         $urlTextMsg = '';
-        if (!empty($url))
-        {
-            $commandParams = array(
+        if (!empty($url)) {
+            $commandParams = [
               'u'   => $this->app['cf.user'],
               'tkn' => $this->app['cf.token'],
               'a'   => 'zone_file_purge',
               'z'   => $domain,
-              'url' => $url
-            );
+              'url' => $url,
+            ];
 
             $urlTextMsg = "URL '$url' on";
-
         } else {
-
-            $commandParams = array(
+            $commandParams = [
                 'u'   => $this->app['cf.user'],
                 'tkn' => $this->app['cf.token'],
                 'a'   => 'fpurge_ts',
                 'z'   => $domain,
-                'v'   => 1
-            );
+                'v'   => 1,
+            ];
         }
 
         $response = $this->app['guzzle']['cf']->CachePurge($commandParams);

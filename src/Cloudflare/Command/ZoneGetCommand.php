@@ -1,15 +1,13 @@
 <?php
+
 namespace Cloudflare\Command;
 
 use Symfony\Component\Console;
 use Symfony\Component\Console\Output\OutputInterface;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
 
 class ZoneGetCommand extends ContainerAwareCommand
 {
-
-    private static $labels = array();
+    private static $labels = [];
 
     public function __construct($app, $name = null)
     {
@@ -17,7 +15,6 @@ class ZoneGetCommand extends ContainerAwareCommand
         $this->setDescription('Get current settings of the specified zone');
         $this->setHelp('This command allows you to get a full dump of all settings of the requested domain.');
         $this->addArgument('domain', Console\Input\InputArgument::REQUIRED, 'The domain you want to get settings');
-
 
         $this->labels['setting']['userSecuritySetting'] = 'User Security Setting';
         $this->labels['setting']['dev_mode'] = 'Development Mode';
@@ -47,7 +44,7 @@ class ZoneGetCommand extends ContainerAwareCommand
         $this->labels['setting']['waf_profile'] = 'Web Application Firewall (>Pro)';
         $this->labels['setting']['ddos'] = 'Advanced DDoS Protection (>Pro)';
 
-        $bool_values = array(0 => 'Off', 1=>'On');
+        $bool_values = [0 => 'Off', 1 => 'On'];
 
         $this->labels['dev_mode'] = $bool_values;
         $this->labels['ob'] = $bool_values;
@@ -75,7 +72,7 @@ class ZoneGetCommand extends ContainerAwareCommand
         $this->labels['minify'][5] = 'JavaScript and HTML';
         $this->labels['minify'][6] = 'CSS and HTML';
         $this->labels['minify'][7] = 'CSS, Javascript and HTML';
-        
+
         $this->labels['ipv46'][0] = 'Off';
         $this->labels['ipv46'][3] = 'Full';
 
@@ -86,7 +83,7 @@ class ZoneGetCommand extends ContainerAwareCommand
         $this->labels['outlink'] = $bool_values;
         $this->labels['geoloc'] = $bool_values;
         $this->labels['spdy'] = $bool_values;
-        
+
         $this->labels['ssl'][0] = 'Off';
         $this->labels['ssl'][1] = 'Flexible';
         $this->labels['ssl'][2] = 'Full';
@@ -103,22 +100,21 @@ class ZoneGetCommand extends ContainerAwareCommand
 
         $this->labels['preload'] = $bool_values;
 
-        $this->labels['fpurge_ts'] = function ($value) { return date('r', $value); };  
+        $this->labels['fpurge_ts'] = function ($value) { return date('r', $value); };
     }
 
-    protected function labelize($key, $value) {
-
+    protected function labelize($key, $value)
+    {
         if (isset($this->labels[$key])) {
-          if (is_callable($this->labels[$key]))
-              return $this->labels[$key]($value);
-          elseif (isset($this->labels[$key][$value]))
-              return $this->labels[$key][$value];
+            if (is_callable($this->labels[$key])) {
+                return $this->labels[$key]($value);
+            } elseif (isset($this->labels[$key][$value])) {
+                return $this->labels[$key][$value];
+            }
         }
-        
+
         return $value;
     }
-    
-
 
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
@@ -126,12 +122,12 @@ class ZoneGetCommand extends ContainerAwareCommand
 
         $data = $this->app['guzzle']->getData('cf');
 
-        $commandParams = array(
+        $commandParams = [
             'u'   => $this->app['cf.user'],
             'tkn' => $this->app['cf.token'],
             'a'   => 'zone_settings',
             'z'   => $domain,
-        );
+        ];
 
         $response = $this->app['guzzle']['cf']->CachePurge($commandParams);
 
@@ -140,19 +136,17 @@ class ZoneGetCommand extends ContainerAwareCommand
         } else {
             $output->writeln("\n<info>Current settings for domain $domain</info>\n");
 
-            foreach($response['response']['result']['objs'][0] as $k=>$v)
-            {
-                 $table_rows[] = array(
-                    $this->labelize('setting', $k), 
-                    $this->labelize($k, $v));
-             }
+            foreach ($response['response']['result']['objs'][0] as $k => $v) {
+                $table_rows[] = [
+                    $this->labelize('setting', $k),
+                    $this->labelize($k, $v), ];
+            }
 
-             $table = $this->getApplication()->getHelperSet()->get('table');
-             $table
-                 ->setHeaders(array('Setting', 'Value'))
+            $table = $this->getApplication()->getHelperSet()->get('table');
+            $table
+                 ->setHeaders(['Setting', 'Value'])
                  ->setRows($table_rows);
-             $table->render($output);
-
+            $table->render($output);
         }
         if (OutputInterface::VERBOSITY_DEBUG <= $output->getVerbosity()) {
             $output->writeln(var_dump($response->toArray()));
